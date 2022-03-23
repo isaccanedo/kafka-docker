@@ -1,0 +1,40 @@
+version: '2'
+services:
+    zoo1:
+        image: zookeeper-kafka
+        restart: always
+        ports:
+            - 2181
+            - 9092
+        environment:
+            ZOO_MY_ID: 1
+            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+            HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
+    zoo2:
+        image: zookeeper-kafka
+        restart: always
+        ports:
+            - 2181
+            - 9092
+        environment:
+            ZOO_MY_ID: 2
+            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+            HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
+    zoo3:
+        image: zookeeper-kafka
+        restart: always
+        ports:
+            - 2181
+            - 9092
+        environment:
+            ZOO_MY_ID: 3
+            ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+            HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
